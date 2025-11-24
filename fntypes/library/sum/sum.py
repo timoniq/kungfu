@@ -7,7 +7,7 @@ from fntypes.utilities.runtime_generic import RuntimeGeneric
 HEAD = typing.NewType("HEAD", type)
 
 
-class Variative[*Ts](RuntimeGeneric):
+class Sum[*Ts](RuntimeGeneric):
     _value: typing.Any
 
     __slots__ = ("_value",)
@@ -19,7 +19,7 @@ class Variative[*Ts](RuntimeGeneric):
     @recursive_repr()
     def __repr__(self) -> str:
         args = self.get_args()
-        return "Variative{}({!r})".format(
+        return "Sum{}({!r})".format(
             "[{}]".format(
                 ", ".join(arg.__name__ if isinstance(arg, type) else repr(arg) for arg in args),
             )
@@ -33,26 +33,26 @@ class Variative[*Ts](RuntimeGeneric):
 
     @property
     def v(self) -> typing.Any:
-        """Junction; intersection of Variative types."""
+        """Junction; intersection of Sum types."""
 
         return self._value
 
     def get_args(self) -> tuple[typing.Any, ...]:
-        """>>> Variative[str, int].get_args()
+        """>>> Sum[str, int].get_args()
         >>> (str, int)
-        >>> Variative[str, int]("Hello!").get_args()
+        >>> Sum[str, int]("Hello!").get_args()
         >>> (str, int)
         """
         return self.__args__
 
     def only(self, t: typing.Any = HEAD) -> Result[typing.Any, str]:
-        """Sets `Variative` to single type. By default this type is generic leading type.
+        """Sets `Sum` to single type. By default this type is generic leading type.
         ```python
-        v = Variative[str, int]("Hello")
+        v = Sum[str, int]("Hello")
         v.only() # Ok('Hello')
         v.only(str) # Ok('Hello')
-        v.only(int) # Error("Variative[str, int]('Hello') cannot be set only to type <class 'int'>")
-        v.only(list) # Error("Variative[str, int]('Hello') cannot be set only to type <class 'list'>")
+        v.only(int) # Error("Sum[str, int]('Hello') cannot be set only to type <class 'int'>")
+        v.only(list) # Error("Sum[str, int]('Hello') cannot be set only to type <class 'list'>")
         ```
         """
 
@@ -67,24 +67,24 @@ class Variative[*Ts](RuntimeGeneric):
     def detach(self) -> typing.Any:
         """Detaches head type. To make this customizable Python must implement intersection typing.
         ```python
-        v = Variative[str, int]
+        v = Sum[str, int]
 
-        v("Hello").detach() #> Error("Variative[str, int]('Hello') is of type <class 'str'>. Thus, head cannot be detached")
+        v("Hello").detach() #> Error("Sum[str, int]('Hello') is of type <class 'str'>. Thus, head cannot be detached")
 
-        v(1).detach() #> Ok(Variative[int](1))
+        v(1).detach() #> Ok(Sum[int](1))
         ```
         """
 
         args = self.get_args()
         if len(args) < 2:
             type_names = ", ".join(arg.__name__ if isinstance(arg, type) else repr(arg) for arg in args)
-            return Error(f"Cannot detach head from Variative[{type_names}]: at least two args required.")
+            return Error(f"Cannot detach head from Sum[{type_names}]: at least two args required.")
 
         head, *tail = args
         if isinstance(self._value, head) and not isinstance(self._value, tuple(tail)):
             return Error(f"`{repr(self)}` is of type `{head}`. Thus, head cannot be detached.")
 
-        return Ok(Variative[*tail](self._value))  # type: ignore[UnknownVariableType]
+        return Ok(Sum[*tail](self._value))  # type: ignore[UnknownVariableType]
 
 
-__all__ = ("Variative",)
+__all__ = ("Sum",)

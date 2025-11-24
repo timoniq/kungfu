@@ -1,7 +1,7 @@
 import time
 from dataclasses import dataclass
 
-from fntypes import Nothing, Ok, Option, Result, Some, Variative, unwrapping
+from fntypes import Nothing, Ok, Option, Result, Some, Sum, unwrapping
 
 
 @dataclass
@@ -15,7 +15,7 @@ class Call:
     from_user: int
 
 
-Event = Variative[Message, Call]
+Event = Sum[Message, Call]
 
 
 @unwrapping

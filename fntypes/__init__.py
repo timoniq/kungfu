@@ -15,7 +15,7 @@ __all__ = (
     "Result",
     "Some",
     "UnwrapError",
-    "Variative",
+    "Sum",
     "acache",
     "cache",
     "either",
