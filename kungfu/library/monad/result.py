@@ -3,12 +3,12 @@ from __future__ import annotations
 import typing
 from reprlib import recursive_repr
 
-from fntypes.library.error import UnwrapError
-from fntypes.utilities.log_factory import ErrorLogFactoryMixin
-from fntypes.utilities.misc import Caster
+from kungfu.library.error import UnwrapError
+from kungfu.utilities.log_factory import ErrorLogFactoryMixin
+from kungfu.utilities.misc import Caster
 
 if typing.TYPE_CHECKING:
-    from fntypes.library.lazy.lazy_coro_result import LazyCoroResult
+    from kungfu.library.lazy.lazy_coro_result import LazyCoroResult
 
 type AnyCallable = typing.Callable[[typing.Any], object]
 type Result[T, E] = Ok[T] | Error[E]
@@ -101,7 +101,7 @@ class Ok[Value]:
         return self.then(f)
 
     def to_async(self) -> LazyCoroResult[Value, typing.Any]:
-        from fntypes.library.lazy.lazy_coro_result import LazyCoro, LazyCoroResult
+        from kungfu.library.lazy.lazy_coro_result import LazyCoro, LazyCoroResult
 
         return LazyCoroResult(LazyCoro.pure(self))
 
@@ -186,7 +186,7 @@ class Error[E](ErrorLogFactoryMixin[E]):
         return error(self._error)
 
     def to_async(self) -> LazyCoroResult[typing.Any, E]:
-        from fntypes.library.lazy.lazy_coro_result import LazyCoro, LazyCoroResult
+        from kungfu.library.lazy.lazy_coro_result import LazyCoro, LazyCoroResult
 
         return LazyCoroResult(LazyCoro.pure(self))
 

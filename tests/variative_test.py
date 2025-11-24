@@ -2,8 +2,8 @@ import re
 
 import pytest
 
-from fntypes.library.error import UnwrapError
-from fntypes.library.sum import Sum
+from kungfu.library.error import UnwrapError
+from kungfu.library.sum import Sum
 
 
 def test_union_only_head() -> None:

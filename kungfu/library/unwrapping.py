@@ -2,9 +2,9 @@ import asyncio
 import typing
 from functools import wraps
 
-from fntypes.library.error.error import UnwrapError
-from fntypes.library.monad.option import Nothing, Option
-from fntypes.library.monad.result import Error, Result
+from kungfu.library.error.error import UnwrapError
+from kungfu.library.monad.option import Nothing, Option
+from kungfu.library.monad.result import Error, Result
 
 type Coroutine[T] = typing.Coroutine[typing.Any, typing.Any, T]
 type Function[**P, R] = typing.Callable[P, R]

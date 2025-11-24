@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import typing
 
-from fntypes.library.caching import cache
+from kungfu.library.caching import cache
 
 
 class Lazy[Value]:

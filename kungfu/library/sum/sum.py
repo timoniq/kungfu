@@ -1,8 +1,8 @@
 import typing
 from reprlib import recursive_repr
 
-from fntypes.library.monad.result import Error, Ok, Result
-from fntypes.utilities.runtime_generic import RuntimeGeneric
+from kungfu.library.monad.result import Error, Ok, Result
+from kungfu.utilities.runtime_generic import RuntimeGeneric
 
 HEAD = typing.NewType("HEAD", type)
 

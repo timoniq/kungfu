@@ -1,7 +1,7 @@
 import pytest
 
-from fntypes.library.error.error import UnwrapError
-from fntypes.library.monad.option import Nothing
+from kungfu.library.error.error import UnwrapError
+from kungfu.library.monad.option import Nothing
 
 
 def test_unwrap_error_with_error_with_attributes() -> None:

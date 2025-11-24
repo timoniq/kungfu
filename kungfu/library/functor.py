@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import typing
 
-from fntypes.library.error import UnwrapError
-from fntypes.library.misc import identity, is_ok
-from fntypes.library.monad.result import Result
+from kungfu.library.error import UnwrapError
+from kungfu.library.misc import identity, is_ok
+from kungfu.library.monad.result import Result
 
 
 class F[R, **P = [R]]:

@@ -3,7 +3,7 @@ from __future__ import annotations
 import linecache
 import typing
 
-from fntypes.utilities.misc import get_frame
+from kungfu.utilities.misc import get_frame
 
 PREPEND_RESULT_LOG_MESSAGE: typing.Final[str] = "Result traceback log (error value is not controlled):\n\n"
 MAX_STACK_DEPTH: typing.Final[int] = 15

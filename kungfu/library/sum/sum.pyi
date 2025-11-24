@@ -1,6 +1,6 @@
 import typing
 
-from fntypes.library.monad.result import Result
+from kungfu.library.monad.result import Result
 
 class Sum[*Ts]:
     __match_args__: typing.ClassVar[tuple[typing.Literal["_value"]]]

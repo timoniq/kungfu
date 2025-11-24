@@ -4,10 +4,10 @@ import typing
 from functools import cached_property, lru_cache
 from reprlib import recursive_repr
 
-from fntypes.utilities.misc import is_exception, to_exception_class
+from kungfu.utilities.misc import is_exception, to_exception_class
 
 if typing.TYPE_CHECKING:
-    from fntypes.library.monad.option import Option
+    from kungfu.library.monad.option import Option
 
 
 def repr_unwrap_error_value(
@@ -41,7 +41,7 @@ class Catchable(BaseException):
 
 class UnwrapError[T](Catchable):
     def __new__(cls, error: T | None = None) -> typing.Self:
-        from fntypes.library.misc import from_optional
+        from kungfu.library.misc import from_optional
 
         if error is not None and is_exception(error) and (exception_class := to_exception_class(error)) is not cls:
             if not issubclass(exception_class, cls):
@@ -59,7 +59,7 @@ class UnwrapError[T](Catchable):
         Catchable.__init__(self, *error_to_exception_args(error))
 
     def __getattr__(self, __name: str) -> typing.Any:
-        from fntypes.library.monad.option import Some
+        from kungfu.library.monad.option import Some
 
         match self.__error__:
             case Some(error) if isinstance(error, BaseException):

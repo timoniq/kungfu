@@ -1,4 +1,4 @@
-from fntypes import Error, Nothing, Option, Result, Some
+from kungfu import Error, Nothing, Option, Result, Some
 
 
 def map_error(result: Result[int, str]) -> Option[int]:

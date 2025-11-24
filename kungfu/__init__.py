@@ -1,5 +1,5 @@
-from fntypes.library import *
-from fntypes.utilities.log_factory import RESULT_ERROR_LOGGER
+from kungfu.library import *
+from kungfu.utilities.log_factory import RESULT_ERROR_LOGGER
 
 __all__ = (
     "RESULT_ERROR_LOGGER",

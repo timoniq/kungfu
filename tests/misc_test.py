@@ -1,5 +1,5 @@
-from fntypes.library.misc import either, identity
-from fntypes.library.monad.result import Error, Ok
+from kungfu.library.misc import either, identity
+from kungfu.library.monad.result import Error, Ok
 
 
 def test_identity() -> None:

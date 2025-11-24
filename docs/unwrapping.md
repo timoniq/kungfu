@@ -1,8 +1,8 @@
-# fntypes - unwrapping
+# kungfu - unwrapping
 
-Unwrapping is a way to manage control flow designed with fntypes monads in a more convenient manner.
+Unwrapping is a way to manage control flow designed with kungfu monads in a more convenient manner.
 
-In theory, unwrapping is needed to create a syntaxic sugar that functions like `bind` method that defines a monad. In fntypes `bind` is known as `.then`. What it does, is it creates a binding between two functions returning a result of the same error type or option. If the current monad is in the state of error, the error is returned, if not, the value is passed into the function that is an argument in `then`. Let's look to the following example:
+In theory, unwrapping is needed to create a syntaxic sugar that functions like `bind` method that defines a monad. In kungfu `bind` is known as `.then`. What it does, is it creates a binding between two functions returning a result of the same error type or option. If the current monad is in the state of error, the error is returned, if not, the value is passed into the function that is an argument in `then`. Let's look to the following example:
 
 ```python
 def func1(a: int) -> Result[str, str]:
@@ -39,7 +39,7 @@ In order to do that, `unwrapping` decorator is used:
 
 
 ```python
-from fntypes import unwrapping, Result, Ok, Error, Option
+from kungfu import unwrapping, Result, Ok, Error, Option
 
 
 class User:

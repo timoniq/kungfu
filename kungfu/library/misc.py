@@ -1,7 +1,7 @@
 import typing_extensions as typing
 
-from fntypes.library.monad.option import Nothing, Option, Some
-from fntypes.library.monad.result import Error, Ok, Result
+from kungfu.library.monad.option import Nothing, Option, Some
+from kungfu.library.monad.result import Error, Ok, Result
 
 
 def identity[T](x: T, /) -> T:

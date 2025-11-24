@@ -1,4 +1,4 @@
-from fntypes.library.caching import acache, cache
+from kungfu.library.caching import acache, cache
 
 
 def test_cache() -> None:

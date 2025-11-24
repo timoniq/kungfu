@@ -1,4 +1,4 @@
-from fntypes import Error, Ok, Pulse
+from kungfu import Error, Ok, Pulse
 
 
 def send_message(text: str) -> Pulse[str]:

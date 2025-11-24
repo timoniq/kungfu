@@ -1,6 +1,6 @@
 import random
 
-from fntypes import Error, Nothing, Ok, Option, Result, Some, is_err, unwrapping
+from kungfu import Error, Nothing, Ok, Option, Result, Some, is_err, unwrapping
 
 
 @unwrapping

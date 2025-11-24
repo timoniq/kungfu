@@ -1,10 +1,10 @@
 import pytest
 
-from fntypes.library.error import UnwrapError
-from fntypes.library.misc import is_err, is_ok
-from fntypes.library.monad.option import Nothing, Some
-from fntypes.library.monad.result import Error, Ok, Result
-from fntypes.utilities.log_factory import RESULT_ERROR_LOGGER
+from kungfu.library.error import UnwrapError
+from kungfu.library.misc import is_err, is_ok
+from kungfu.library.monad.option import Nothing, Some
+from kungfu.library.monad.result import Error, Ok, Result
+from kungfu.utilities.log_factory import RESULT_ERROR_LOGGER
 
 
 def inc_number(n: int) -> Result[int, TypeError]:

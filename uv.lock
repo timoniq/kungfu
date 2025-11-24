@@ -39,7 +39,7 @@ wheels = [
 ]
 
 [[package]]
-name = "fntypes"
+name = "kungfu"
 version = "0.2.1"
 source = { editable = "." }
 dependencies = [

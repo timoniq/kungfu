@@ -1,5 +1,5 @@
 [project]
-name = "fntypes"
+name = "kungfu"
 version = "0.2.1"
 description = ""
 authors = [{ name = "timoniq" }]

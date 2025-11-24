@@ -1,4 +1,4 @@
-# fntypes
+# kungfu
 
 ⚙️ Functional typing in Python!
 
@@ -10,13 +10,13 @@ get_user()
   .unwrap()
 ```
 
-## why fntypes?
+## why kungfu?
 
-fntypes is based on the belief that raising exceptions should be avoided. So it defines a set of functional types needed to write better code. This type strategy grants you with higher control over your runtime.
+kungfu is based on the belief that raising exceptions should be avoided. So it defines a set of functional types needed to write better code. This type strategy grants you with higher control over your runtime.
 
 Panicking is the last recourse but for some obscure reason spawning exceptions each time you encounter something other than the all-successful behaviour became a norm in python code.
 
-Let's fix this up and instead of panicking do treat error-state as equal to successful-state. fntypes provides you with all you need to migrate to functional typing approach
+Let's fix this up and instead of panicking do treat error-state as equal to successful-state. kungfu provides you with all you need to migrate to functional typing approach
 
 Improving control flow will definitely result in avoiding logical errors and getting better code readability: you start to see each kind of behaviour you get from the function.
 

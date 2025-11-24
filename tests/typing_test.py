@@ -1,6 +1,6 @@
 import typing
 
-from fntypes.library.sum import Sum
+from kungfu.library.sum import Sum
 
 
 def test_dunder_get_args() -> None:

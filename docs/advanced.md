@@ -1,8 +1,8 @@
-# fntypes - advanced
+# kungfu - advanced
 
 In order to use advanced methods, some theory needs to be explained.
 
-Monad (a concept that fntypes is build on), requires its implementation to have a `bind` method. In `fntypes`, its name is `then` which expresses this idea in terms of imperative reality much better. We can *link* a monad (a result / an option) to a functor that will transform a value but preserve the original error type.
+Monad (a concept that kungfu is build on), requires its implementation to have a `bind` method. In `kungfu`, its name is `then` which expresses this idea in terms of imperative reality much better. We can *link* a monad (a result / an option) to a functor that will transform a value but preserve the original error type.
 
 ```python
 x: Result[int, str]

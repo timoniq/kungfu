@@ -1,4 +1,4 @@
-from fntypes import F, Ok, Result
+from kungfu import F, Ok, Result
 
 
 def get_result(x: int) -> Result[int, str]:

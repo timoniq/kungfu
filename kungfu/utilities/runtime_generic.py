@@ -5,7 +5,7 @@ import types
 import typing
 from functools import cached_property
 
-from fntypes.utilities.misc import is_dunder
+from kungfu.utilities.misc import is_dunder
 
 GENERIC_CLASS_ATTRS: typing.Final[dict[typing.Any, set[str]]] = {
     types.GenericAlias: set(dir(types.GenericAlias)),

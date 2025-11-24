@@ -1,6 +1,6 @@
 import typing
 
-from fntypes.library.monad.option import Option
+from kungfu.library.monad.option import Option
 
 class ErrorDescriptorProxy[T]:
     @typing.overload

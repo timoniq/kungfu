@@ -1,4 +1,4 @@
-# fntypes - Sum
+# kungfu - Sum
 
 `Sum` is a functional replacement for `Union` typehint. It has methods to enhance the control flow over union types. Some of these methods use head-tail notation due to the type-hinting restrictions.
 

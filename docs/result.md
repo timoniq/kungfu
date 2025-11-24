@@ -1,4 +1,4 @@
-# fntypes - Result
+# kungfu - Result
 
 ## Theory
 
@@ -10,11 +10,11 @@ It's because they ruin control flow completely: exceptions, raised in a function
 
 In order to keep our control flow in a good form, we are offered to use Result monad - which is an entity that can obtain 2 states: a value - when the function proceeded successfully, or an error of a specific type - in case a function encountered a problem.
 
-Therefore, two classes in `fntypes` exist to represent these states:
+Therefore, two classes in `kungfu` exist to represent these states:
 
-1. `fntypes.Ok` - representing a successful case
+1. `kungfu.Ok` - representing a successful case
 
-2. `fntypes.Error` - representing an error
+2. `kungfu.Error` - representing an error
 
 An ambiguative state of those two states is called `Result`.
 
@@ -23,7 +23,7 @@ An ambiguative state of those two states is called `Result`.
 Let's create a function which is going to divide two numbers, and instead of raising an exception when the divisor is zero, its going to form an error state of a result. Otherwise, `Ok` with a resulting number is returned.
 
 ```python
-from fntypes import Result, Ok, Error
+from kungfu import Result, Ok, Error
 
 # Result takes 2 type arguments:
 # first one is a type of value on success,

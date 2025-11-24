@@ -1,7 +1,7 @@
 import time
 from dataclasses import dataclass
 
-from fntypes import Nothing, Ok, Option, Result, Some, Sum, unwrapping
+from kungfu import Nothing, Ok, Option, Result, Some, Sum, unwrapping
 
 
 @dataclass

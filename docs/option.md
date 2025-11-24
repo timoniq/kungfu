@@ -1,4 +1,4 @@
-# fntypes - option
+# kungfu - option
 
 `Option` is derived from [Result](/docs/result.md), but its error state is secluded to only one possible - the `Nothing` state. The value state of Option is called `Some`.
 You may be used to use None python value to create such sort of ambiguation, but this is not good for the programming environment we are trying to create as it lacks functional features.
@@ -7,7 +7,7 @@ Due to the fact, that `Option` is derived from simple Result, we can use all of 
 In order to work with Option we will need to import such components as `Option`, `Some`, `Nothing`:
 
 ```python
-from fntypes import Option, Some, Nothing
+from kungfu import Option, Some, Nothing
 ```
 
 Let's create a function that will receive an option string and map its value into an uppercase version if it is in the state of `Some`:

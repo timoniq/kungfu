@@ -1,7 +1,7 @@
 import pytest
 
-from fntypes.library.monad.result import Error, Ok, Result
-from fntypes.library.unwrapping import unwrapping
+from kungfu.library.monad.result import Error, Ok, Result
+from kungfu.library.unwrapping import unwrapping
 
 
 def test_unwrapping() -> None:

@@ -3,8 +3,8 @@ from __future__ import annotations
 import typing
 from reprlib import recursive_repr
 
-from fntypes.library.monad.result import AnyCallable, Error, Ok
-from fntypes.utilities.singleton.singleton import Singleton
+from kungfu.library.monad.result import AnyCallable, Error, Ok
+from kungfu.utilities.singleton.singleton import Singleton
 
 type Option[T] = Some[T] | Nothing
 

@@ -2,7 +2,7 @@ import collections.abc
 import functools
 import typing
 
-from fntypes.library.monad.option import Nothing, Option, Some
+from kungfu.library.monad.option import Nothing, Option, Some
 
 
 def cache[T](func: typing.Callable[[], T]) -> typing.Callable[[], T]:

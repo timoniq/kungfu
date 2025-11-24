@@ -1,6 +1,6 @@
-# fntypes - documentation
+# kungfu - documentation
 
-Welcome! Here is the list of concepts implemented by fntypes in an order suggested to learn this library:
+Welcome! Here is the list of concepts implemented by kungfu in an order suggested to learn this library:
 
 1. [Result](/docs/result.md)
 

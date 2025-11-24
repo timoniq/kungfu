@@ -1,4 +1,4 @@
-from fntypes import Error, Ok, Result, Some, unwrapping
+from kungfu import Error, Ok, Result, Some, unwrapping
 
 
 @unwrapping

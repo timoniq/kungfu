@@ -1,4 +1,4 @@
-from fntypes.library.sum import Sum
+from kungfu.library.sum import Sum
 
 u = Sum[int, str, float](1)
 

@@ -3,10 +3,10 @@ from __future__ import annotations
 import typing
 from typing import assert_never
 
-from fntypes.library.caching import acache
-from fntypes.library.lazy.lazy_coro import LazyCoro
-from fntypes.library.monad.result import Error, Ok, Result
-from fntypes.utilities.misc import Caster
+from kungfu.library.caching import acache
+from kungfu.library.lazy.lazy_coro import LazyCoro
+from kungfu.library.monad.result import Error, Ok, Result
+from kungfu.utilities.misc import Caster
 
 
 class LazyCoroResult[Value, Err]:
