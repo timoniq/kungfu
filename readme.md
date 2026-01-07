@@ -82,6 +82,12 @@ MIT licensed
 
 [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
 
+These projects are awesome to extend kungfu environment:
+
 * **[nodnod](https://github.com/timoniq/nodnod)** - dependency injection with efficient nodes computation agents and dependency scoping
 
 * **[combinators.py](https://github.com/prostomarkeloff/combinators.py)** - build explicit functional pipelines
+
+These projects implement kungfu environment in their specific utility cases:
+
+* **[telegrinder](https://github.com/timoniq/telegrinder)** - telegram bot framework
