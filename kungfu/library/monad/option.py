@@ -53,4 +53,7 @@ class Some[Value](Ok[Value]):
         return f(self._value)
 
 
-__all__ = ("Nothing", "Option", "Some")
+NOTHING: typing.Final = Nothing()
+
+
+__all__ = ("Nothing", "Option", "Some", "NOTHING")

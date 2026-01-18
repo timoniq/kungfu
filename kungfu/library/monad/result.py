@@ -4,7 +4,6 @@ import typing
 from reprlib import recursive_repr
 
 from kungfu.library.error import UnwrapError
-from kungfu.utilities.log_factory import ErrorLogFactoryMixin
 from kungfu.utilities.misc import Caster
 
 if typing.TYPE_CHECKING:
@@ -106,7 +105,7 @@ class Ok[Value]:
         return LazyCoroResult(LazyCoro.pure(self))
 
 
-class Error[E](ErrorLogFactoryMixin[E]):
+class Error[E]:
     """`Result.Error` representing error and containing an error value."""
 
     __slots__ = ("_error", "_tb", "_is_controlled")
@@ -114,9 +113,6 @@ class Error[E](ErrorLogFactoryMixin[E]):
 
     def __init__(self, error: E, /) -> None:
         self._error = error
-        self._tb = None
-        self._is_controlled = False
-        super().__init__()
 
     def __eq__(self, other: object, /) -> bool:
         if not isinstance(other, self.__class__):

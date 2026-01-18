@@ -4,7 +4,6 @@ from kungfu.library.error import UnwrapError
 from kungfu.library.misc import is_err, is_ok
 from kungfu.library.monad.option import Nothing, Some
 from kungfu.library.monad.result import Error, Ok, Result
-from kungfu.utilities.log_factory import RESULT_ERROR_LOGGER
 
 
 def inc_number(n: int) -> Result[int, TypeError]:
@@ -83,13 +82,3 @@ def test_some() -> None:
     assert repr(option) == "Some(1)"
     assert option.map(lambda x: x + 1) == Some(2)
     assert option.then(lambda x: Nothing()) == Nothing()
-
-
-def test_log_factory() -> None:
-    dct = dict[str, str]()
-    RESULT_ERROR_LOGGER.set_log(lambda err: dct.update({"err": err}))
-    RESULT_ERROR_LOGGER.set_traceback_formatter(lambda: "")
-
-    Error("Error msg")
-
-    assert dct["err"].endswith(repr("Error msg"))

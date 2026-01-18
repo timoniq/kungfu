@@ -1,4 +1,4 @@
-import asyncio
+import inspect
 import typing
 from functools import wraps
 
@@ -19,7 +19,7 @@ def unwrapping[**P, R](func: Function[P, Option[R]], /) -> Function[P, Option[R]
 
 
 @typing.overload
-def unwrapping[**P, T, Err](func: Function[P, Result[T, Err]], /) -> Function[P, Result[T, Err]]: ...
+def unwrapping[**P, T, Err](func: Function[P, Result[T, Err]], /) -> Function[P, Result[T, Err]]: ...  # type: ignore
 
 
 @typing.overload
@@ -27,11 +27,11 @@ def unwrapping[**P, R](func: Function[P, typing.Awaitable[Option[R]]], /) -> Fun
 
 
 @typing.overload
-def unwrapping[**P, T, Err](func: Function[P, typing.Awaitable[Result[T, Err]]], /) -> Function[P, Coroutine[Result[T, Err]]]: ...
+def unwrapping[**P, T, Err](func: Function[P, typing.Awaitable[Result[T, Err]]], /) -> Function[P, Coroutine[Result[T, Err]]]: ...  # type: ignore[reportUnknownReturnType]
 
 
 def unwrapping(func: Function[..., typing.Any], /) -> Function[..., typing.Any]:
-    if asyncio.iscoroutinefunction(func):
+    if inspect.iscoroutinefunction(func):
 
         @wraps(func)
         @typing.no_type_check

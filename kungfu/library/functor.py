@@ -56,7 +56,7 @@ class F[R, **P = [R]]:
         error: typing.Callable[[Result[T, Err]], BaseException] | BaseException | str | None = None,
     ) -> F[T, P]:
         return self.ensure(is_ok, error=error).then(lambda result: result.unwrap())
-    
+
     if typing.TYPE_CHECKING:
 
         @typing.overload
@@ -65,10 +65,10 @@ class F[R, **P = [R]]:
         @typing.overload
         def new[X, **Y = [X]](self, f: typing.Callable[Y, X], /) -> F[X, Y]: ...
 
-        def new(self, *args, **kwargs) -> typing.Any:
+        def new(self, *args: typing.Any, **kwargs: typing.Any) -> typing.Any:
             ...
     else:
-        def new(self, t) -> typing.Never:
+        def new(self, t: typing.Any) -> typing.Never:
             return self.__class__(t)
 
 
