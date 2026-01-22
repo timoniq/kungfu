@@ -1,6 +1,6 @@
 [project]
 name = "kungfu"
-version = "0.3.0"
+version = "1.0.0"
 description = ""
 authors = [{ name = "timoniq" }]
 requires-python = ">=3.13,<4.0"
