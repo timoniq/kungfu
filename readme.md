@@ -72,6 +72,12 @@ def send_funds(
     )
 ```
 
+## install
+
+```sh
+pip install kungfu-fp
+```
+
 Contributions are welcome
 
 MIT licensed
