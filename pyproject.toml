@@ -1,5 +1,5 @@
 [project]
-name = "kungfu"
+name = "kungfu-fp"
 version = "1.0.0"
 description = ""
 authors = [{ name = "timoniq" }]
@@ -97,3 +97,6 @@ reportMissingTypeStubs = false
 reportUnannotatedClassAttribute = false
 reportAny = false
 reportUnusedCallResult = false
+
+[tool.hatch.build.targets.wheel]
+packages = ["kungfu"]

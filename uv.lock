@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 2
 requires-python = ">=3.13, <4.0"
 
 [[package]]
@@ -118,8 +118,8 @@ wheels = [
 ]
 
 [[package]]
-name = "kungfu"
-version = "0.3.0"
+name = "kungfu-fp"
+version = "1.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "typing-extensions" },

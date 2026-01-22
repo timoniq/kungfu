@@ -9,7 +9,7 @@ from kungfu.utilities.misc import Caster
 if typing.TYPE_CHECKING:
     from kungfu.library.lazy.lazy_coro_result import LazyCoroResult
 
-type AnyCallable = typing.Callable[..., object]
+type AnyCallable = typing.Callable[..., typing.Any]
 type Result[T, E] = Ok[T] | Error[E]
 type Wrapped[T] = Ok[T] | Error[typing.Any]
 type Pulse[E] = Ok[None] | Error[E]
