@@ -1,10 +1,14 @@
 import typing
 from reprlib import recursive_repr
 
+from typing_extensions import type_repr
+
 from kungfu.library.monad.result import Error, Ok, Result
 from kungfu.utilities.runtime_generic import RuntimeGeneric
 
-HEAD = typing.NewType("HEAD", type)
+AnyOk: typing.TypeAlias = Ok[typing.Any]
+
+HEAD: typing.Final = typing.NewType("HEAD", type)
 
 
 class Sum[*Ts](RuntimeGeneric):
@@ -20,9 +24,7 @@ class Sum[*Ts](RuntimeGeneric):
     def __repr__(self) -> str:
         args = self.get_args()
         return "Sum{}({!r})".format(
-            "[{}]".format(
-                ", ".join(arg.__name__ if isinstance(arg, type) else repr(arg) for arg in args),
-            )
+            "[{}]".format(", ".join(type_repr(arg) for arg in args))
             if args
             else "",
             self._value,
@@ -47,6 +49,12 @@ class Sum[*Ts](RuntimeGeneric):
 
     def only(self, t: typing.Any = HEAD) -> Result[typing.Any, str]:
         """Sets `Sum` to single type. By default this type is generic leading type.
+
+        Note: If a parameterized type is specified for example, `list[str]` - then `.only`
+        will not check whether the types of the list's elements match the type that was passed;
+        it will only check the object instance itself (`list`).
+        The responsibility remains with the developer.
+
         ```python
         v = Sum[str, int]("Hello")
         v.only() # Ok('Hello')
@@ -54,15 +62,18 @@ class Sum[*Ts](RuntimeGeneric):
         v.only(int) # Error("Sum[str, int]('Hello') cannot be set only to type <class 'int'>")
         v.only(list) # Error("Sum[str, int]('Hello') cannot be set only to type <class 'list'>")
         ```
+
         """
 
         if t is HEAD:
             t = self.get_args()[0]
 
-        if not isinstance(self._value, t):
+        origin_t = typing.get_origin(t)
+
+        if not isinstance(self._value, origin_t if origin_t is not None else t):
             return Error(f"`{repr(self)}` cannot be set only to type `{t}`.")
 
-        return Ok(self._value)
+        return AnyOk(self._value)
 
     def detach(self) -> typing.Any:
         """Detaches head type. To make this customizable Python must implement intersection typing.
@@ -77,14 +88,15 @@ class Sum[*Ts](RuntimeGeneric):
 
         args = self.get_args()
         if len(args) < 2:
-            type_names = ", ".join(arg.__name__ if isinstance(arg, type) else repr(arg) for arg in args)
+            type_names = ", ".join(type_repr(arg) for arg in args)
             return Error(f"Cannot detach head from Sum[{type_names}]: at least two args required.")
 
-        head, *tail = args
+        head, *tail = (origin_arg if (origin_arg := typing.get_origin(arg)) is not None else arg for arg in args)
         if isinstance(self._value, head) and not isinstance(self._value, tuple(tail)):
-            return Error(f"`{repr(self)}` is of type `{head}`. Thus, head cannot be detached.")
+            return Error(f"`{repr(self)}` is of type `{args[0]}`. Thus, head cannot be detached.")
 
-        return Ok(Sum[*tail](self._value))  # type: ignore[UnknownVariableType]
+        sum_alias = Sum[*args[1:]]  # type: ignore
+        return Ok[sum_alias](sum_alias(self._value))  # type: ignore
 
 
 __all__ = ("Sum",)

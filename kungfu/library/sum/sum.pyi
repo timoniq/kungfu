@@ -1,5 +1,7 @@
 import typing
 
+from typing_extensions import TypeForm
+
 from kungfu.library.monad.result import Result
 
 class Sum[*Ts]:
@@ -14,7 +16,7 @@ class Sum[*Ts]:
     @typing.overload
     def only[T, P](self: Sum[T, *tuple[P, ...]]) -> Result[T, str]: ...
     @typing.overload
-    def only[T](self, t: type[T]) -> Result[T, str]:
+    def only[T](self, t: TypeForm[T]) -> Result[T, str]:
         # Probably there is not way for a better typing until T cannot be bound to Ts or intersection typehint is implemented
         ...
     def detach[Head, *Tail](self: Sum[Head, *Tail]) -> Result[Sum[*Tail], str]: ...
