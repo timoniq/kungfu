@@ -1,3 +1,4 @@
+from kungfu.utilities.annotations import get_type_from_annotation
 from kungfu.utilities.misc import Caster, is_dunder, is_exception, to_exception_class
 from kungfu.utilities.runtime_generic import RuntimeGeneric
 from kungfu.utilities.singleton.singleton import Singleton, SingletonMeta
@@ -10,4 +11,5 @@ __all__ = (
     "is_dunder",
     "is_exception",
     "to_exception_class",
+    "get_type_from_annotation",
 )
