@@ -5,8 +5,6 @@ import types
 import typing
 from functools import cached_property
 
-from typing_extensions import type_repr
-
 from kungfu.utilities.misc import is_dunder
 
 GENERIC_CLASS_ATTRS: typing.Final[typing.Mapping[typing.Any, frozenset[str]]] = types.MappingProxyType(
@@ -88,7 +86,7 @@ class RuntimeGeneric:
 
         for arg in typing.get_args(generic):
             if isinstance(arg, types.UnionType | typing.Union):
-                raise TypeError(f"Union types are not supported ({arg}).")
+                raise TypeError(f"Union types are not supported ({arg!r}).")
 
             origin_arg = origin if (origin := typing.get_origin(arg)) is not None else arg
 
@@ -97,11 +95,7 @@ class RuntimeGeneric:
                 continue
 
             if hash(parametrized_map[origin_arg]) != hash(arg):
-                raise TypeError(
-                    f"Using both `{type_repr(parametrized_map[origin_arg])}` and `{type_repr(arg)}` results in ambiguity. "
-                    f"For a given generic type such as `{type_repr(origin_arg)}`, only one variant may be specified: either "
-                    f"the unparameterized type `{type_repr(origin_arg)}` or a single parameterized form.",
-                )
+                raise TypeError("Complex types are not supported.")
 
         return GenericProxy(generic) if typing.get_origin(generic) is not None else generic
 
