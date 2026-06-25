@@ -5,6 +5,8 @@ import types
 import typing
 from functools import cached_property
 
+from typing_extensions import type_repr
+
 from kungfu.utilities.misc import is_dunder
 
 GENERIC_CLASS_ATTRS: typing.Final[typing.Mapping[typing.Any, frozenset[str]]] = types.MappingProxyType(
@@ -82,20 +84,15 @@ class RuntimeGeneric:
             raise TypeError(f"Type `{cls.__name__}` is not subscriptable and it has no `__class_getitem__` method.")
 
         generic = class_getitem(__key)
-        parametrized_map: dict[type[typing.Any], typing.Any] = {}
 
         for arg in typing.get_args(generic):
             if isinstance(arg, types.UnionType | typing.Union):
-                raise TypeError(f"Union types are not supported ({arg!r}).")
+                raise TypeError(f"Union types are not supported `{arg!r}`.")
 
-            origin_arg = origin if (origin := typing.get_origin(arg)) is not None else arg
+            origin_arg = typing.get_origin(arg)
 
-            if origin_arg not in parametrized_map:
-                parametrized_map[origin_arg] = arg
-                continue
-
-            if hash(parametrized_map[origin_arg]) != hash(arg):
-                raise TypeError("Complex types are not supported.")
+            if origin_arg is not None and origin_arg is not typing.Annotated:
+                raise TypeError(f"Parametrized types are not supported `{type_repr(arg)}`.")
 
         return GenericProxy(generic) if typing.get_origin(generic) is not None else generic
 

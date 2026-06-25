@@ -14,7 +14,10 @@ def get_type_from_annotation(annotation: typing.Any, /) -> type[typing.Any]:
             break
 
         if origin is typing.Annotated:
-            t = typing.get_args(t)[0]
+            t = typing.get_args(t)[1]
+            continue
+
+        t = origin
 
     return t if isinstance(t, type) else type(t)
 

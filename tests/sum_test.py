@@ -1,4 +1,5 @@
 import re
+import typing
 
 import pytest
 
@@ -15,21 +16,29 @@ def test_union_only_head() -> None:
     assert a[str].unwrap_or_none() == None
 
     b = Sum[int, str]("String")
-    with pytest.raises(UnwrapError, match=re.escape("`Sum[int, str]('String')` cannot be set only to type `<class 'int'>`.")):
+    with pytest.raises(UnwrapError, match=re.escape("`Sum[int, str]('String')` cannot be set only to type `int`.")):
         b.only().unwrap()
 
     assert b.only().unwrap_or_none() is None
 
 
 def test_union_only_custom() -> None:
-    a = Sum[int, str, list]("String")
+    a = Sum[int, str]("String")
     assert a.only(str).unwrap() == "String"
 
-    with pytest.raises(UnwrapError, match=re.escape("`Sum[int, str, list]('String')` cannot be set only to type `<class 'int'>`.")):
+    with pytest.raises(UnwrapError, match=re.escape("`Sum[int, str]('String')` cannot be set only to type `int`.")):
         a.only(int).unwrap()
 
     assert a.only(int).unwrap_or_none() is None
-    assert a.only(dict).unwrap_or_none() is None
+    assert a.only(float).unwrap_or_none() is None
+
+
+def test_union_with_annotated_type() -> None:
+    type X = typing.Annotated[list[str], list]  # type: ignore
+
+    sum = Sum[int, str, X](["String"])
+
+    assert sum.only(X).unwrap_or_none() is not None
 
 
 def test_union_detach():
@@ -39,10 +48,10 @@ def test_union_detach():
     b = Sum[int, str](1)
     assert b.detach().unwrap_or_none() is None
 
-    c = Sum[int, str, list]("String")
+    c = Sum[int, str, float]("String")
     detached = c.detach().unwrap()
     assert isinstance(detached, Sum)
-    assert detached.get_args() == (str, list)
+    assert detached.get_args() == (str, float)
 
     with pytest.raises(UnwrapError):
         detached.detach().unwrap()
