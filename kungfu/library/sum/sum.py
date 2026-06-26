@@ -50,12 +50,6 @@ class Sum[*Ts](RuntimeGeneric):
 
     def only(self, t: typing.Any = HEAD) -> Result[typing.Any, str]:
         """Sets `Sum` to single type. By default this type is generic leading type.
-
-        Note: If a parameterized type is specified for example, `list[str]` - then `.only`
-        will not check whether the types of the list's elements match the type that was passed;
-        it will only check the object instance itself (`list`).
-        The responsibility remains with the developer.
-
         ```python
         v = Sum[str, int]("Hello")
         v.only() # Ok('Hello')
@@ -63,7 +57,6 @@ class Sum[*Ts](RuntimeGeneric):
         v.only(int) # Error("Sum[str, int]('Hello') cannot be set only to type `int`.")
         v.only(list) # Error("Sum[str, int]('Hello') cannot be set only to type `list`.")
         ```
-
         """
 
         if t is HEAD:
