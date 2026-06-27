@@ -5,12 +5,16 @@ import types
 import typing
 from functools import cached_property
 
+from typing_extensions import type_repr
+
 from kungfu.utilities.misc import is_dunder
 
-GENERIC_CLASS_ATTRS: typing.Final[dict[typing.Any, set[str]]] = {
-    types.GenericAlias: set(dir(types.GenericAlias)),
-    typing._GenericAlias: set(dir(typing._GenericAlias)),  # pyright: ignore[reportAttributeAccessIssue, reportUnknownArgumentType, reportUnknownMemberType]
-}
+GENERIC_CLASS_ATTRS: typing.Final[typing.Mapping[typing.Any, frozenset[str]]] = types.MappingProxyType(
+    mapping={
+        types.GenericAlias: frozenset(dir(types.GenericAlias)),
+        getattr(typing, "_GenericAlias"): frozenset(dir(getattr(typing, "_GenericAlias"))),
+    },
+)
 
 
 def bound_proxy(
@@ -29,10 +33,12 @@ class GenericProxy:
         self._generic = generic
 
     def __getattr__(self, __name: str) -> typing.Any:
-        if is_dunder(__name) or __name in GENERIC_CLASS_ATTRS[type(self._generic)]:
-            return getattr(self._generic, __name)
+        generic = self._generic
 
-        obj = getattr(self._generic.__origin__, __name)
+        if is_dunder(__name) or __name in GENERIC_CLASS_ATTRS[type(generic)]:
+            return getattr(generic, __name)
+
+        obj = getattr(generic.__origin__, __name)
 
         if inspect.ismethod(obj) and hasattr(obj, "__self__") and isinstance(obj.__self__, type):
             return bound_proxy(obj, self)
@@ -50,6 +56,9 @@ class GenericProxy:
 
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__} of {self._generic!r}>"
+
+    def __hash__(self) -> int:
+        return hash(self._generic)
 
     @property
     @typing.no_type_check
@@ -75,8 +84,15 @@ class RuntimeGeneric:
             raise TypeError(f"Type `{cls.__name__}` is not subscriptable and it has no `__class_getitem__` method.")
 
         generic = class_getitem(__key)
-        if any(typing.get_origin(arg) is not None for arg in typing.get_args(generic)):
-            raise TypeError("Parametrized, annotated or union types are not supported.")
+
+        for arg in typing.get_args(generic):
+            if isinstance(arg, types.UnionType | typing.Union):
+                raise TypeError(f"Union types are not supported `{arg!r}`.")
+
+            origin_arg = typing.get_origin(arg)
+
+            if origin_arg is not None and origin_arg is not typing.Annotated:
+                raise TypeError(f"Parametrized types are not supported `{type_repr(arg)}`.")
 
         return GenericProxy(generic) if typing.get_origin(generic) is not None else generic
 
