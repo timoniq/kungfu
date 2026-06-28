@@ -43,7 +43,7 @@ jobs:
     steps:
       - uses: asottile/workflows/.github/actions/fast-checkout@v1.8.1
       - uses: ./.github/actions/install-dependencies
-      - run: uv run pyright --level error
+      - run: uv run basedpyright --level error
 
   tests:
     name: "Testing"

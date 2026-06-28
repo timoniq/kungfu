@@ -9,7 +9,7 @@ from kungfu.utilities.misc import Caster
 if typing.TYPE_CHECKING:
     from kungfu.library.lazy.lazy_coro_result import LazyCoroResult
 
-type AnyCallable = typing.Callable[..., typing.Any]
+type AnyCallable[T = typing.Any] = typing.Callable[[T], typing.Any]
 type Result[T, E] = Ok[T] | Error[E]
 type Wrapped[T] = Ok[T] | Error[typing.Any]
 type Pulse[E] = Ok[None] | Error[E]
@@ -72,19 +72,19 @@ class Ok[Value]:
     def map[T](self, op: typing.Callable[[Value], T], /) -> Ok[T]:
         return Ok(op(self._value))
 
-    def map_err(self, f: AnyCallable, /) -> Ok[Value]:
+    def map_err[T](self, f: AnyCallable[T], /) -> Ok[Value]:
         return self
 
     def map_or[T](self, default_value: T, f: typing.Callable[[Value], T], /) -> Ok[T]:
         return Ok(f(self._value))
 
-    def map_or_else[T](self, default_f: AnyCallable, f: typing.Callable[[Value], T], /) -> Ok[T]:
+    def map_or_else[T, V](self, default_f: AnyCallable[V], f: typing.Callable[[Value], T], /) -> Ok[T]:
         return Ok(f(self._value))
 
-    def cast[T](
+    def cast[T, V](
         self,
         ok: typing.Callable[[Value], T] = _default_ok,
-        error: AnyCallable = _default_error,
+        error: AnyCallable[V] = _default_error,
         /,
     ) -> T:
         return ok(self._value)
@@ -152,30 +152,30 @@ class Error[E]:
     def unwrap_or_other[T](self, other: Result[T, object], /) -> T:
         return other.unwrap()
 
-    def map(self, op: AnyCallable, /) -> typing.Self:
+    def map[T](self, op: AnyCallable[T], /) -> typing.Self:
         return self
 
     def map_err[Err](self, f: typing.Callable[[E], Err], /) -> Error[Err]:
         return Error(f(self._error))
 
-    def map_or[T](self, default_value: T, f: AnyCallable, /) -> Ok[T]:
+    def map_or[T, V](self, default_value: T, f: AnyCallable[V], /) -> Ok[T]:
         return Ok(default_value)
 
-    def map_or_else[Err, T](self, default_f: typing.Callable[[E], T], f: AnyCallable, /) -> Ok[T]:
+    def map_or_else[Err, T, V](self, default_f: typing.Callable[[E], T], f: AnyCallable[V], /) -> Ok[T]:
         return Ok(default_f(self._error))
 
     def expect(self, error: typing.Any, /) -> typing.NoReturn:
         raise UnwrapError(error)
 
-    def then[T, Err](self, f: AnyCallable, /) -> Error[E]:
+    def then[T, Err, V](self, f: AnyCallable[V], /) -> Error[E]:
         return self
 
-    def ensure(self, f: AnyCallable, error: E) -> Error[E]:
+    def ensure[T](self, f: AnyCallable[T], error: E) -> Error[E]:
         return self
 
-    def cast[T](
+    def cast[T, V](
         self,
-        ok: AnyCallable = _default_ok,
+        ok: AnyCallable[V] = _default_ok,
         error: Caster[E, T] = _default_error,
         /,
     ) -> T:

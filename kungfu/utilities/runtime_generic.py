@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import inspect
+import sys
 import types
 import typing
 from functools import cached_property
@@ -86,7 +87,12 @@ class RuntimeGeneric:
         generic = class_getitem(__key)
 
         for arg in typing.get_args(generic):
-            if isinstance(arg, types.UnionType | typing.Union):
+            if sys.version_info < (3, 14):
+                is_union = isinstance(arg, (types.UnionType, getattr(typing, "_UnionGenericAlias")))
+            else:
+                is_union = isinstance(arg, types.UnionType | typing.Union)
+
+            if is_union:
                 raise TypeError(f"Union types are not supported `{arg!r}`.")
 
             origin_arg = typing.get_origin(arg)

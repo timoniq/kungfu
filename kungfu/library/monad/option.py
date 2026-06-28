@@ -34,8 +34,8 @@ class Nothing(Singleton, Error[None]):
     def __del__(self) -> None:
         pass
 
-    def then(self, f: AnyCallable, /) -> Nothing:
-        return Nothing()
+    def then[T](self, f: AnyCallable[T], /) -> Nothing:
+        return NOTHING
 
 
 class Some[Value](Ok[Value]):
@@ -49,7 +49,7 @@ class Some[Value](Ok[Value]):
     def map[T](self, op: typing.Callable[[Value], T], /) -> Some[T]:
         return Some(op(self._value))
 
-    def then[T](self, f: typing.Callable[[Value], Option[T]], /) -> Option[T]:  # pyright: ignore[reportIncompatibleMethodOverride]
+    def then[T](self, f: typing.Callable[[Value], Option[T]], /) -> Option[T]:  # type: ignore
         return f(self._value)
 
 

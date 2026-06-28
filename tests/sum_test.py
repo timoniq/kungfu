@@ -34,11 +34,11 @@ def test_union_only_custom() -> None:
 
 
 def test_union_with_annotated_type() -> None:
-    type X = typing.Annotated[list[str], list]  # type: ignore
+    class TestNamespace:
+        X = typing.Annotated[list[str], list]
 
-    sum = Sum[int, str, X](["String"])
-
-    assert sum.only(X).unwrap_or_none() is not None
+    sum = Sum[int, str, TestNamespace.X](["String"])
+    assert sum.only(TestNamespace.X).unwrap_or_none() is not None
 
 
 def test_union_detach():
